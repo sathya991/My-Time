@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'My Time',
       theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromRGBO(255, 255, 255, 1),
         primarySwatch: Colors.blue,
         textTheme: TextTheme(
             bodyText1: GoogleFonts.rubik(
