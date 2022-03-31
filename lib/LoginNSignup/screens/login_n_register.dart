@@ -16,6 +16,7 @@ class _LoginNRegisterScreenState extends State<LoginNRegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
           child: Column(
         children: [

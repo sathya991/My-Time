@@ -1,4 +1,5 @@
 import 'package:MyTime/MainPages/screens/dashboard.dart';
+import 'package:MyTime/utilities/login_signup_utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +91,7 @@ class RegisterWidget extends StatelessWidget {
               ),
               TextFormField(
                 decoration: constantTheme("Email"),
-                validator: (txt) => emailValidate(txt!),
+                validator: (txt) => LoginSignupUtilities().emailValidate(txt!),
                 onSaved: (txt) => _email = txt!,
               ),
               const SizedBox(
