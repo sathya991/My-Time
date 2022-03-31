@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "695523865700",
+    "project_id": "my-time-944eb",
+    "storage_bucket": "my-time-944eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695523865700:android:a3384e17fe26962b3b5b71",
+        "android_client_info": {
+          "package_name": "com.NSApps.MyTime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695523865700-rfeb14h1lpguobijdhp2n24t38rjn3f8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.NSApps.MyTime",
+            "certificate_hash": "74255de2606b41d6ca627d8d1786e0252f99d047"
+          }
+        },
+        {
+          "client_id": "695523865700-d62sfl96mr2jtgsv2lnehijbdklnobdh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgv9oiqYDamE2olcLgXy3JzV7akznIUrM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695523865700-d62sfl96mr2jtgsv2lnehijbdklnobdh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
