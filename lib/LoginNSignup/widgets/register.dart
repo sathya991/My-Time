@@ -75,7 +75,7 @@ class RegisterWidget extends StatelessWidget {
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(10));
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 100, 25, 35),
+      padding: const EdgeInsets.fromLTRB(25, 50, 25, 35),
       child: Form(
           key: _formKey,
           child: Column(
