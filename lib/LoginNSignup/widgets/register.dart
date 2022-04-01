@@ -15,6 +15,7 @@ class RegisterWidget extends StatelessWidget {
     String _phone = "";
     String _password = "";
 
+    //Validating and Registering user
     validateNRegister() async {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
@@ -31,50 +32,6 @@ class RegisterWidget extends StatelessWidget {
       }
     }
 
-    emailValidate(String email) {
-      if (email.isEmpty) {
-        return "Please enter a valid email";
-      }
-      bool emailValid = RegExp(
-              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-          .hasMatch(email);
-      if (!emailValid) {
-        return "Please enter a valid email";
-      }
-      return null;
-    }
-
-    phoneValidate(String phone) {
-      if (phone.length != 10 || phone.isEmpty) {
-        return "Enter a valid mobile number";
-      }
-      return null;
-    }
-
-    passwordValidate(String password) {
-      RegExp regex = RegExp(
-          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-      if (password.isEmpty) {
-        return "Please enter a password";
-      }
-      if (!regex.hasMatch(password)) {
-        return "Password should contain\n * One upper case character \n * One lower case character\n * One digit\n * One special character\n * Must be atleast 8 characters long";
-      }
-      return null;
-    }
-
-    InputDecoration constantTheme(String text) {
-      return InputDecoration(
-          focusedBorder: const OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: Color.fromRGBO(5, 10, 60, 1), width: 2.0)),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          hintText: text);
-    }
-
-    final shape =
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(10));
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(25, 50, 25, 35),
       child: Form(
@@ -90,7 +47,7 @@ class RegisterWidget extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                decoration: constantTheme("Email"),
+                decoration: LoginSignupUtilities().constantTheme("Email"),
                 validator: (txt) => LoginSignupUtilities().emailValidate(txt!),
                 onSaved: (txt) => _email = txt!,
               ),
@@ -98,8 +55,9 @@ class RegisterWidget extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                decoration: constantTheme("Phone"),
-                validator: (phone) => phoneValidate(phone!),
+                decoration: LoginSignupUtilities().constantTheme("Phone"),
+                validator: (phone) =>
+                    LoginSignupUtilities().phoneValidate(phone!),
                 keyboardType: TextInputType.number,
                 onSaved: (txt) => _phone = txt!,
               ),
@@ -107,8 +65,9 @@ class RegisterWidget extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                decoration: constantTheme("Password"),
-                validator: (password) => passwordValidate(password!),
+                decoration: LoginSignupUtilities().constantTheme("Password"),
+                validator: (password) =>
+                    LoginSignupUtilities().passwordValidate(password!),
                 obscureText: true,
                 enableSuggestions: false,
                 autocorrect: false,
@@ -117,21 +76,13 @@ class RegisterWidget extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              Container(
-                decoration: ShapeDecoration(
-                    shape: shape,
-                    gradient: const LinearGradient(colors: [
-                      Color.fromRGBO(0, 4, 40, 1),
-                      Color.fromRGBO(0, 78, 146, 1)
-                    ])),
-                child: ElevatedButton(
-                  onPressed: validateNRegister,
-                  child: Text(
-                    "Register",
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
+              LoginSignupUtilities().styleButton(ElevatedButton(
+                onPressed: validateNRegister,
+                child: Text(
+                  "Register",
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
-              )
+              ))
             ],
           )),
     );
