@@ -15,6 +15,17 @@ class LoginSignupUtilities {
     return null;
   }
 
+  usernameValidate(String userName) {
+    if (userName.isEmpty) {
+      return "Please enter a valid username";
+    } else if (userName.length < 4 || userName.length > 12) {
+      return "Username length should be between 4 and 12 letters";
+    } else if (userName.contains(" ")) {
+      return "Username must not contain spaces";
+    }
+    return null;
+  }
+
   phoneValidate(String phone) {
     if (phone.length != 10 || phone.isEmpty) {
       return "Enter a valid mobile number";

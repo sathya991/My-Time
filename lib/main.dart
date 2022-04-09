@@ -2,13 +2,21 @@ import 'package:MyTime/LoginNSignup/screens/login_n_register.dart';
 import 'package:MyTime/LoginNSignup/screens/password_reset.dart';
 import 'package:MyTime/LoginNSignup/screens/password_reset_mail_sent.dart';
 import 'package:MyTime/MainPages/screens/dashboard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+      name: "My Time",
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyDgv9oiqYDamE2olcLgXy3JzV7akznIUrM",
+          appId: "1:695523865700:android:a3384e17fe26962b3b5b71",
+          messagingSenderId: "695523865700",
+          projectId: "my-time-944eb",
+          storageBucket: 'gs://my-time-944eb.appspot.com'));
   runApp(const MyApp());
 }
 
@@ -38,7 +46,9 @@ class MyApp extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         )),
       ),
-      home: const LoginNRegisterScreen(),
+      home: FirebaseAuth.instance.currentUser == null
+          ? const LoginNRegisterScreen()
+          : const DashboardScreen(),
       initialRoute: '/',
       routes: {
         DashboardScreen.dashboardRoute: (context) => const DashboardScreen(),

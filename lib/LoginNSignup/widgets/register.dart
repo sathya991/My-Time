@@ -12,6 +12,7 @@ class RegisterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     String _email = "";
+    String _username = "";
     String _phone = "";
     String _password = "";
 
@@ -20,13 +21,20 @@ class RegisterWidget extends StatelessWidget {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
         await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: _email, password: _password)
+            .createUserWithEmailAndPassword(
+                email: _email.trim(), password: _password.trim())
             .then((value) async {
           await FirebaseFirestore.instance
               .collection('users')
               .doc(value.user!.uid)
-              .set({'email': _email, 'phone': _phone}).then((value) {
-            Navigator.of(context).pushNamed(DashboardScreen.dashboardRoute);
+              .set({
+            'email': _email,
+            'phone': _phone,
+            'username': _username,
+            'profPic': ""
+          }).then((value) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                DashboardScreen.dashboardRoute, ModalRoute.withName('/'));
           });
         });
       }
@@ -50,6 +58,15 @@ class RegisterWidget extends StatelessWidget {
                 decoration: LoginSignupUtilities().constantTheme("Email"),
                 validator: (txt) => LoginSignupUtilities().emailValidate(txt!),
                 onSaved: (txt) => _email = txt!,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                decoration: LoginSignupUtilities().constantTheme("Username"),
+                validator: (username) =>
+                    LoginSignupUtilities().usernameValidate(username!),
+                onSaved: (txt) => _username = txt!,
               ),
               const SizedBox(
                 height: 20,

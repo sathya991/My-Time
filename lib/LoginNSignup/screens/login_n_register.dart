@@ -17,26 +17,34 @@ class _LoginNRegisterScreenState extends State<LoginNRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    var padding = MediaQuery.of(context).viewPadding;
+    double height1 = height - padding.top - padding.bottom;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset('assets/images/topBackground.png'),
-                Image.asset(
-                  'assets/images/MyTime.png',
-                  height: 160,
-                ),
-              ],
-            ),
-            loginOrSignup(),
-            const Spacer(),
-            bottomSingleWidget(),
-          ],
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: height1,
+          width: width,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset('assets/images/topBackground.png'),
+                  Image.asset(
+                    'assets/images/MyTime.png',
+                    height: 160,
+                  ),
+                ],
+              ),
+              loginOrSignup(),
+              const Spacer(),
+              bottomSingleWidget(),
+            ],
+          ),
         ),
       ),
     );

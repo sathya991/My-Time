@@ -16,11 +16,16 @@ class LoginWidget extends StatelessWidget {
     String _password = "";
 
     validateNSignin() async {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: _email, password: _password)
-          .then((value) {
-        Navigator.of(context).pushNamed(DashboardScreen.dashboardRoute);
-      });
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: _email.trim(), password: _password.trim())
+            .then((value) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              DashboardScreen.dashboardRoute, ModalRoute.withName('/'));
+        });
+      }
     }
 
     return Padding(
@@ -74,7 +79,7 @@ class LoginWidget extends StatelessWidget {
               LoginSignupUtilities().styleButton(ElevatedButton(
                 onPressed: validateNSignin,
                 child: Text(
-                  "Register",
+                  "Login",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ))
