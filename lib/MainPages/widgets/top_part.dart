@@ -89,7 +89,7 @@ class _TopPartWidgetState extends State<TopPartWidget> {
                                       fontSize: 15))
                             ],
                           ),
-                          ImagePart()
+                          const ImagePart()
                         ],
                       )
                     ],

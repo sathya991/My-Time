@@ -9,14 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      name: "My Time",
-      options: const FirebaseOptions(
-          apiKey: "AIzaSyDgv9oiqYDamE2olcLgXy3JzV7akznIUrM",
-          appId: "1:695523865700:android:a3384e17fe26962b3b5b71",
-          messagingSenderId: "695523865700",
-          projectId: "my-time-944eb",
-          storageBucket: 'gs://my-time-944eb.appspot.com'));
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
