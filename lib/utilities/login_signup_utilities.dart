@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class LoginSignupUtilities {
   final shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(10));
+  final shape2 = const StadiumBorder();
   emailValidate(String email) {
     if (email.isEmpty) {
       return "Please enter a valid email";
@@ -60,6 +61,18 @@ class LoginSignupUtilities {
     return Container(
       decoration: ShapeDecoration(
           shape: shape,
+          gradient: const LinearGradient(colors: [
+            Color.fromRGBO(0, 4, 40, 1),
+            Color.fromRGBO(0, 78, 146, 1)
+          ])),
+      child: button,
+    );
+  }
+
+  styleRoundedButton(Widget button) {
+    return Container(
+      decoration: ShapeDecoration(
+          shape: shape2,
           gradient: const LinearGradient(colors: [
             Color.fromRGBO(0, 4, 40, 1),
             Color.fromRGBO(0, 78, 146, 1)
