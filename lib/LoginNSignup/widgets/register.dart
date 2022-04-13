@@ -1,4 +1,4 @@
-import 'package:MyTime/MainPages/screens/dashboard.dart';
+import 'package:MyTime/MainPages/widgets/dashboard.dart';
 import 'package:MyTime/MainPages/screens/headscreen.dart';
 import 'package:MyTime/utilities/login_signup_utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

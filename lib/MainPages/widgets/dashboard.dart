@@ -1,4 +1,4 @@
-import 'package:MyTime/MainPages/screens/timetables.dart';
+import 'package:MyTime/MainPages/widgets/timetables.dart';
 import 'package:MyTime/MainPages/widgets/text_button_column.dart';
 import 'package:MyTime/MainPages/widgets/top_part.dart';
 import 'package:MyTime/utilities/login_signup_utilities.dart';

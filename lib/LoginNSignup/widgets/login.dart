@@ -1,5 +1,5 @@
 import 'package:MyTime/LoginNSignup/screens/password_reset.dart';
-import 'package:MyTime/MainPages/screens/dashboard.dart';
+import 'package:MyTime/MainPages/widgets/dashboard.dart';
 import 'package:MyTime/MainPages/screens/headscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

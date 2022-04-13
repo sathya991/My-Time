@@ -1,5 +1,5 @@
-import 'package:MyTime/MainPages/screens/dashboard.dart';
-import 'package:MyTime/MainPages/screens/timetables.dart';
+import 'package:MyTime/MainPages/widgets/dashboard.dart';
+import 'package:MyTime/MainPages/widgets/timetables.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
