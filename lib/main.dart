@@ -2,6 +2,8 @@ import 'package:MyTime/LoginNSignup/screens/login_n_register.dart';
 import 'package:MyTime/LoginNSignup/screens/password_reset.dart';
 import 'package:MyTime/LoginNSignup/screens/password_reset_mail_sent.dart';
 import 'package:MyTime/MainPages/screens/dashboard.dart';
+import 'package:MyTime/MainPages/screens/headscreen.dart';
+import 'package:MyTime/MainPages/screens/timetables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -44,11 +46,11 @@ class MyApp extends StatelessWidget {
           : const DashboardScreen(),
       initialRoute: '/',
       routes: {
-        DashboardScreen.dashboardRoute: (context) => const DashboardScreen(),
         ForgotPasswordScreen.passwordResetRoute: (context) =>
             const ForgotPasswordScreen(),
         PasswordResetMailSent.passwordResetDoneRoute: (context) =>
             const PasswordResetMailSent(),
+        HeadScreen.headScreenRoute: (context) => const HeadScreen(),
       },
     );
   }

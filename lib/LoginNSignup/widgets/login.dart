@@ -1,5 +1,6 @@
 import 'package:MyTime/LoginNSignup/screens/password_reset.dart';
 import 'package:MyTime/MainPages/screens/dashboard.dart';
+import 'package:MyTime/MainPages/screens/headscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,7 +24,7 @@ class LoginWidget extends StatelessWidget {
                 email: _email.trim(), password: _password.trim())
             .then((value) {
           Navigator.of(context).pushNamedAndRemoveUntil(
-              DashboardScreen.dashboardRoute, ModalRoute.withName('/'));
+              HeadScreen.headScreenRoute, ModalRoute.withName('/'));
         });
       }
     }

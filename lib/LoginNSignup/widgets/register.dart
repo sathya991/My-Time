@@ -1,4 +1,5 @@
 import 'package:MyTime/MainPages/screens/dashboard.dart';
+import 'package:MyTime/MainPages/screens/headscreen.dart';
 import 'package:MyTime/utilities/login_signup_utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,7 +35,7 @@ class RegisterWidget extends StatelessWidget {
             'profPic': ""
           }).then((value) {
             Navigator.of(context).pushNamedAndRemoveUntil(
-                DashboardScreen.dashboardRoute, ModalRoute.withName('/'));
+                HeadScreen.headScreenRoute, ModalRoute.withName('/'));
           });
         });
       }
