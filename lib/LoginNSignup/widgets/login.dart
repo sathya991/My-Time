@@ -24,7 +24,8 @@ class LoginWidget extends StatelessWidget {
                 email: _email.trim(), password: _password.trim())
             .then((value) {
           Navigator.of(context).pushNamedAndRemoveUntil(
-              HeadScreen.headScreenRoute, ModalRoute.withName('/'));
+              HeadScreen.headScreenRoute, ModalRoute.withName('/'),
+              arguments: "Login");
         });
       }
     }

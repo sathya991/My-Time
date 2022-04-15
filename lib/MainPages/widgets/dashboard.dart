@@ -5,6 +5,7 @@ import 'package:MyTime/utilities/login_signup_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -52,7 +53,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 height: 30,
                 width: 120,
                 child: LoginSignupUtilities().styleRoundedButton(ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Share.share(
+                        "Hey there I have a 7-day streak of completing my tasks on MyTime.");
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [

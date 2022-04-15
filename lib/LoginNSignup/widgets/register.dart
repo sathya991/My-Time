@@ -35,7 +35,8 @@ class RegisterWidget extends StatelessWidget {
             'profPic': ""
           }).then((value) {
             Navigator.of(context).pushNamedAndRemoveUntil(
-                HeadScreen.headScreenRoute, ModalRoute.withName('/'));
+                HeadScreen.headScreenRoute, ModalRoute.withName('/'),
+                arguments: "Register");
           });
         });
       }

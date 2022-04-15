@@ -1,5 +1,6 @@
 import 'package:MyTime/MainPages/widgets/dashboard.dart';
 import 'package:MyTime/MainPages/widgets/timetables.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -15,6 +16,22 @@ class HeadScreen extends StatefulWidget {
 }
 
 class _HeadScreenState extends State<HeadScreen> {
+  String checkRegister = "";
+  Color selectColor = const Color.fromRGBO(0, 78, 146, 1);
+  // @override
+  // void initState() {
+  //   checkRegister = ModalRoute.of(context)!.settings.arguments as String;
+
+  //   super.initState();
+
+  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
+
   var _curIndex = 0;
   List availableScreens = [const DashboardScreen(), const TimetablesScreen()];
   @override
@@ -36,17 +53,20 @@ class _HeadScreenState extends State<HeadScreen> {
                 SalomonBottomBarItem(
                     icon: const FaIcon(FontAwesomeIcons.house),
                     title: const Text("Dashboard"),
-                    selectedColor: const Color.fromRGBO(0, 78, 146, 1)),
+                    selectedColor: selectColor),
                 SalomonBottomBarItem(
                     icon: const FaIcon(FontAwesomeIcons.listCheck),
                     title: const Text("Timetales"),
-                    selectedColor: const Color.fromRGBO(0, 78, 146, 1))
+                    selectedColor: selectColor)
               ]),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [const TopPartWidget(), availableScreens[_curIndex]],
+            children: [
+              const TopPartWidget(),
+              availableScreens[_curIndex],
+            ],
           ),
         ),
       ),

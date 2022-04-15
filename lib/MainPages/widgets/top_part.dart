@@ -12,7 +12,6 @@ import 'package:image_picker/image_picker.dart';
 
 class TopPartWidget extends StatefulWidget {
   const TopPartWidget({Key? key}) : super(key: key);
-
   @override
   State<TopPartWidget> createState() => _TopPartWidgetState();
 }
@@ -21,7 +20,7 @@ class _TopPartWidgetState extends State<TopPartWidget> {
   String _userName = "";
   String profPic = "";
   String curUserUID = "";
-
+  String textToShow = "";
   getUserNameNProfPic() {
     setState(() {
       curUserUID = FirebaseAuth.instance.currentUser!.uid;
@@ -73,7 +72,7 @@ class _TopPartWidgetState extends State<TopPartWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Hi, $_userName",
+                                "Hey, $_userName",
                                 style: GoogleFonts.rubik(
                                     color: Colors.white,
                                     fontStyle: FontStyle.italic,
@@ -81,7 +80,7 @@ class _TopPartWidgetState extends State<TopPartWidget> {
                                     letterSpacing: 1.1,
                                     fontSize: 20),
                               ),
-                              Text("Here are your timetable stats",
+                              Text("Here are your timetables and stats",
                                   style: GoogleFonts.rubik(
                                       color: const Color.fromRGBO(
                                           131, 142, 161, 1),
