@@ -1,4 +1,6 @@
+import 'package:MyTime/ExistingTimetableCreation/Screens/existing_creation_head_screen.dart';
 import 'package:MyTime/MainPages/widgets/text_button_column.dart';
+import 'package:MyTime/utilities/get_timetable_name.dart';
 import 'package:MyTime/utilities/login_signup_utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,6 +41,9 @@ class _TimetablesScreenState extends State<TimetablesScreen> {
                 fontWeight: FontWeight.w600,
                 fontStyle: FontStyle.italic),
           ),
+        ),
+        const SizedBox(
+          height: 10,
         ),
         StreamBuilder<QuerySnapshot>(
             stream: getTimetables(),
@@ -84,8 +89,11 @@ class _TimetablesScreenState extends State<TimetablesScreen> {
                                       .bodyText1!
                                       .copyWith(fontSize: 15),
                                 ),
-                                const FaIcon(
-                                  FontAwesomeIcons.arrowUpRightFromSquare,
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: const FaIcon(
+                                    FontAwesomeIcons.trashCan,
+                                  ),
                                 )
                               ],
                             ),
@@ -105,7 +113,10 @@ class _TimetablesScreenState extends State<TimetablesScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             LoginSignupUtilities().styleRoundedButton(ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(GetTimetableName.getTTnameRoute);
+                },
                 child: Text("Enter existing Timetable",
                     style: GoogleFonts.rubik()))),
             const SizedBox(

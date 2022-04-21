@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginSignupUtilities {
+  final curUser = FirebaseAuth.instance.currentUser;
+
   final shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(10));
   final shape2 = const StadiumBorder();
   emailValidate(String email) {
@@ -27,6 +31,15 @@ class LoginSignupUtilities {
     return null;
   }
 
+  ttNameValidate(String userName) {
+    if (userName.isEmpty) {
+      return "Please enter a valid Timetable name";
+    } else if (userName.length < 3 || userName.length > 16) {
+      return "Username length should be between 3 and 16 letters";
+    }
+    return null;
+  }
+
   phoneValidate(String phone) {
     if (phone.length != 10 || phone.isEmpty) {
       return "Enter a valid mobile number";
@@ -49,6 +62,17 @@ class LoginSignupUtilities {
 //Theme for input boxes in login and signup
   InputDecoration constantTheme(String text) {
     return InputDecoration(
+        focusedBorder: const OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Color.fromRGBO(5, 10, 60, 1), width: 2.0)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        hintText: text);
+  }
+
+  InputDecoration constantThemeWithDarkBG(String text) {
+    return InputDecoration(
+        hintStyle: GoogleFonts.rubik(
+            fontSize: 18, color: Colors.white, fontStyle: FontStyle.italic),
         focusedBorder: const OutlineInputBorder(
             borderSide:
                 BorderSide(color: Color.fromRGBO(5, 10, 60, 1), width: 2.0)),

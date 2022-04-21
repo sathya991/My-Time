@@ -1,9 +1,11 @@
+import 'package:MyTime/ExistingTimetableCreation/Screens/existing_creation_head_screen.dart';
 import 'package:MyTime/LoginNSignup/screens/login_n_register.dart';
 import 'package:MyTime/LoginNSignup/screens/password_reset.dart';
 import 'package:MyTime/LoginNSignup/screens/password_reset_mail_sent.dart';
 import 'package:MyTime/MainPages/widgets/dashboard.dart';
 import 'package:MyTime/MainPages/screens/headscreen.dart';
 import 'package:MyTime/MainPages/widgets/timetables.dart';
+import 'package:MyTime/utilities/get_timetable_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +53,9 @@ class MyApp extends StatelessWidget {
         PasswordResetMailSent.passwordResetDoneRoute: (context) =>
             const PasswordResetMailSent(),
         HeadScreen.headScreenRoute: (context) => const HeadScreen(),
+        ExistingCreationHeadScreen.existingCreationHeadScreenRoute: (context) =>
+            const ExistingCreationHeadScreen(),
+        GetTimetableName.getTTnameRoute: (context) => const GetTimetableName(),
       },
     );
   }

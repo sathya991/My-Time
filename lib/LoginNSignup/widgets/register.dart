@@ -27,7 +27,7 @@ class RegisterWidget extends StatelessWidget {
             .then((value) async {
           await FirebaseFirestore.instance
               .collection('users')
-              .doc(value.user!.uid)
+              .doc(value.user?.uid)
               .set({
             'email': _email,
             'phone': _phone,
