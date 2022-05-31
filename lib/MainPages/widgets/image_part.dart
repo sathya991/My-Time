@@ -113,3 +113,15 @@ class _ImagePartState extends State<ImagePart> {
         });
   }
 }
+
+// .then((value2) {
+//           FirebaseFirestore.instance
+//               .collection('posts')
+//               .doc('ZgkrWcpNzHo7wVNhEpkB')
+//               .collection('comments')
+//               .where('uid', isEqualTo: curUserUID)
+//               .get()
+//               .then((value) => value.docs.forEach((element) {
+//                     element.data().update('userURL', (value) => "url");
+//                   }));
+//         });

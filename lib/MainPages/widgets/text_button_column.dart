@@ -7,11 +7,13 @@ class TextButtonColumnWidget extends StatelessWidget {
   final String topText;
   final String buttonText;
   final icon;
+  final Function()? func;
   const TextButtonColumnWidget(
       {Key? key,
       required this.topText,
       required this.buttonText,
-      required this.icon})
+      required this.icon,
+      this.func})
       : super(key: key);
 
   @override
@@ -33,7 +35,7 @@ class TextButtonColumnWidget extends StatelessWidget {
             height: 10,
           ),
           LoginSignupUtilities().styleButton(ElevatedButton(
-            onPressed: () {},
+            onPressed: func,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

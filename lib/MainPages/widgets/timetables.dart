@@ -1,5 +1,6 @@
 import 'package:MyTime/ExistingTimetableCreation/Screens/existing_creation_head_screen.dart';
 import 'package:MyTime/MainPages/widgets/text_button_column.dart';
+import 'package:MyTime/TimetableView/Screens/timetable_view.dart';
 import 'package:MyTime/utilities/get_timetable_name.dart';
 import 'package:MyTime/utilities/login_signup_utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,6 +25,16 @@ class _TimetablesScreenState extends State<TimetablesScreen> {
         .doc(user!.uid)
         .collection('timetables')
         .snapshots();
+  }
+
+  deleteTT(String id) async {
+    var docRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .collection('timetables')
+        .doc(id);
+    FirebaseFirestore.instance
+        .runTransaction((transaction) async => transaction.delete(docRef));
   }
 
   @override
@@ -78,7 +89,11 @@ class _TimetablesScreenState extends State<TimetablesScreen> {
                       return Column(
                         children: [
                           LoginSignupUtilities().styleButton(ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(
+                                  TimetableView.timetableViewRoute,
+                                  arguments: snapshot.data!.docs[index].id);
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -90,7 +105,8 @@ class _TimetablesScreenState extends State<TimetablesScreen> {
                                       .copyWith(fontSize: 15),
                                 ),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () =>
+                                      deleteTT(snapshot.data!.docs[index].id),
                                   child: const FaIcon(
                                     FontAwesomeIcons.trashCan,
                                   ),

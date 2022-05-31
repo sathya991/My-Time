@@ -23,7 +23,12 @@ class GetTimetableName extends StatelessWidget {
             .add({'name': ttName}).then((value) {
           Navigator.of(context).pushReplacementNamed(
               ExistingCreationHeadScreen.existingCreationHeadScreenRoute,
-              arguments: {'name': ttName, 'id': value.id});
+              arguments: {
+                'name': ttName,
+                'id': value.id,
+                'times': [],
+                'docId': ''
+              });
         });
       }
     }

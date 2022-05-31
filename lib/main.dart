@@ -5,6 +5,7 @@ import 'package:MyTime/LoginNSignup/screens/password_reset_mail_sent.dart';
 import 'package:MyTime/MainPages/widgets/dashboard.dart';
 import 'package:MyTime/MainPages/screens/headscreen.dart';
 import 'package:MyTime/MainPages/widgets/timetables.dart';
+import 'package:MyTime/TimetableView/Screens/timetable_view.dart';
 import 'package:MyTime/utilities/get_timetable_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'My Time',
       theme: ThemeData(
         scaffoldBackgroundColor: const Color.fromRGBO(255, 255, 255, 1),
@@ -56,6 +58,7 @@ class MyApp extends StatelessWidget {
         ExistingCreationHeadScreen.existingCreationHeadScreenRoute: (context) =>
             const ExistingCreationHeadScreen(),
         GetTimetableName.getTTnameRoute: (context) => const GetTimetableName(),
+        TimetableView.timetableViewRoute: (context) => const TimetableView(),
       },
     );
   }

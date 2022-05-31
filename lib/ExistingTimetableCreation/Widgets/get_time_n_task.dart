@@ -1,50 +1,118 @@
 import 'package:MyTime/ExistingTimetableCreation/Screens/existing_creation_head_screen.dart';
+import 'package:MyTime/utilities/basic_utilities.dart';
 import 'package:MyTime/utilities/login_signup_utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 
 class GetTimeNTaskWidget extends StatefulWidget {
-  const GetTimeNTaskWidget({Key? key, this.ttid, this.ttName})
-      : super(key: key);
+  const GetTimeNTaskWidget({
+    Key? key,
+    this.ttid,
+    this.ttName,
+    required this.times,
+    required this.docId,
+  }) : super(key: key);
   final ttid;
   final ttName;
+  final List times;
+  final docId;
   @override
   State<GetTimeNTaskWidget> createState() => _GetTimeNTaskWidgetState();
 }
 
 class _GetTimeNTaskWidgetState extends State<GetTimeNTaskWidget> {
   TimeOfDay a = const TimeOfDay(hour: 0, minute: 0);
-  TimeOfDay b = const TimeOfDay(hour: 0, minute: 0);
+  TimeOfDay b = const TimeOfDay(hour: 2, minute: 0);
   String taskName = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String formatTimeOfDay(TimeOfDay tod) {
-    final now = new DateTime.now();
+    final now = DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
-    final format = DateFormat.jm(); //"6:00 AM"
+    final format = DateFormat.jm();
     return format.format(dt);
   }
 
   addTask() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(LoginSignupUtilities().curUser!.uid)
-          .collection('timetables')
-          .doc(widget.ttid)
-          .collection('tasks')
-          .doc()
-          .set({
-        taskName: [a.toString(), b.toString()]
-      });
-      Navigator.of(context).pushReplacementNamed(
-          ExistingCreationHeadScreen.existingCreationHeadScreenRoute,
-          arguments: {'name': widget.ttName, 'id': widget.ttid});
-      ;
+      bool notOverlap = true;
+      for (int i = 0; i < widget.times.length; i++) {
+        if ((BasicUtilities().toMinutes(a) >
+                    BasicUtilities().toMinutes(widget.times[i][0]) &&
+                BasicUtilities().toMinutes(a) <
+                    BasicUtilities().toMinutes(widget.times[i][1])) ||
+            (BasicUtilities().toMinutes(b) >
+                    BasicUtilities().toMinutes(widget.times[i][0]) &&
+                BasicUtilities().toMinutes(b) <
+                    BasicUtilities().toMinutes(widget.times[i][1])) ||
+            (BasicUtilities().toMinutes(widget.times[i][0]) >
+                    BasicUtilities().toMinutes(a) &&
+                BasicUtilities().toMinutes(widget.times[i][0]) <
+                    BasicUtilities().toMinutes(b)) ||
+            (BasicUtilities().toMinutes(widget.times[i][1]) >
+                    BasicUtilities().toMinutes(a) &&
+                BasicUtilities().toMinutes(widget.times[i][1]) <
+                    BasicUtilities().toMinutes(b))) {
+          notOverlap = false;
+        }
+      }
+      if (notOverlap) {
+        if (widget.docId != '') {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(LoginSignupUtilities().curUser!.uid)
+              .collection('timetables')
+              .doc(widget.ttid)
+              .collection('tasks')
+              .doc(widget.docId)
+              .update({
+            taskName: [
+              a.toString().substring(10, 15),
+              b.toString().substring(10, 15)
+            ]
+          }).then((value) {
+            widget.times.add([a, b]);
+            Navigator.of(context).pushReplacementNamed(
+                ExistingCreationHeadScreen.existingCreationHeadScreenRoute,
+                arguments: {
+                  'name': widget.ttName,
+                  'id': widget.ttid,
+                  'times': widget.times,
+                  'docId': widget.docId,
+                });
+          });
+        } else {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(LoginSignupUtilities().curUser!.uid)
+              .collection('timetables')
+              .doc(widget.ttid)
+              .collection('tasks')
+              .add({
+            taskName: [
+              a.toString().substring(10, 15),
+              b.toString().substring(10, 15)
+            ]
+          }).then((value) {
+            widget.times.add([a, b]);
+            Navigator.of(context).pushReplacementNamed(
+                ExistingCreationHeadScreen.existingCreationHeadScreenRoute,
+                arguments: {
+                  'name': widget.ttName,
+                  'id': widget.ttid,
+                  'times': widget.times,
+                  'docId': value.id,
+                });
+          });
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content:
+                Text("Your time intervals are overlapping with other tasks.")));
+      }
     }
   }
 
@@ -81,6 +149,8 @@ class _GetTimeNTaskWidgetState extends State<GetTimeNTaskWidget> {
             height: 200,
             width: 200,
             child: TimeRangePicker(
+              start: const TimeOfDay(hour: 0, minute: 0),
+              end: const TimeOfDay(hour: 2, minute: 0),
               labels: [
                 "12 AM",
                 "3 AM",
@@ -105,6 +175,7 @@ class _GetTimeNTaskWidgetState extends State<GetTimeNTaskWidget> {
               strokeWidth: 8,
               handlerRadius: 8,
               ticksWidth: 2,
+              use24HourFormat: true,
               ticks: 8,
               hideTimes: true,
               hideButtons: true,
@@ -217,7 +288,9 @@ class _GetTimeNTaskWidgetState extends State<GetTimeNTaskWidget> {
                     fontSize: 20),
               ))),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
             child: Text(
               "That's it for now",
               style: GoogleFonts.rubik(

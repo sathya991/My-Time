@@ -34,7 +34,7 @@ class LoginSignupUtilities {
   ttNameValidate(String userName) {
     if (userName.isEmpty) {
       return "Please enter a valid Timetable name";
-    } else if (userName.length < 3 || userName.length > 16) {
+    } else if (userName.length < 2 || userName.length > 16) {
       return "Username length should be between 3 and 16 letters";
     }
     return null;

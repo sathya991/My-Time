@@ -46,6 +46,8 @@ class _ExistingCreationHeadScreenState
             GetTimeNTaskWidget(
               ttid: vals['id'],
               ttName: vals['name'],
+              times: vals['times'],
+              docId: vals['docId'],
             ),
           ],
         ),

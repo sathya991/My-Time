@@ -1,10 +1,8 @@
-import 'package:MyTime/MainPages/widgets/timetables.dart';
 import 'package:MyTime/MainPages/widgets/text_button_column.dart';
-import 'package:MyTime/MainPages/widgets/top_part.dart';
+import 'package:MyTime/TimetableView/Screens/timetable_view.dart';
 import 'package:MyTime/utilities/login_signup_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -15,32 +13,42 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  openTT() {
+    Navigator.of(context).pushNamed(TimetableView.timetableViewRoute);
+  }
+
+  showTask() {}
+  showStreak() {}
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const TextButtonColumnWidget(
+          TextButtonColumnWidget(
             topText: "Current Timetable",
             buttonText: "My first timetable",
             icon: FontAwesomeIcons.arrowUpRightFromSquare,
+            func: openTT,
           ),
           const SizedBox(
             height: 50,
           ),
-          const TextButtonColumnWidget(
+          TextButtonColumnWidget(
             topText: "Current Task",
             buttonText: "Current task",
             icon: FontAwesomeIcons.arrowUpRightFromSquare,
+            func: showTask,
           ),
           const SizedBox(
             height: 50,
           ),
-          const TextButtonColumnWidget(
+          TextButtonColumnWidget(
             topText: "Streak",
             buttonText: "7-day Streak",
             icon: FontAwesomeIcons.arrowRight,
+            func: showStreak,
           ),
           const SizedBox(
             height: 5,
