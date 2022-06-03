@@ -35,6 +35,25 @@ class _GetTimeNTaskWidgetState extends State<GetTimeNTaskWidget> {
     return format.format(dt);
   }
 
+  // addTimes() async {
+  //   var timesList = [];
+  //   for (int i = 0; i < widget.times.length; i++) {
+  //     timesList.add([
+  //       widget.times[i][0].toString().substring(10, 15),
+  //       widget.times[i][1].toString().substring(10, 15)
+  //     ]);
+  //   }
+  //   await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(BasicUtilities().curUser()!.uid)
+  //       .collection('timetables')
+  //       .doc(widget.ttid)
+  //       .collection('times')
+  //       .add({'times': timesList}).then((value) {
+  //     Navigator.of(context).pop();
+  //   });
+  // }
+
   addTask() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -85,6 +104,7 @@ class _GetTimeNTaskWidgetState extends State<GetTimeNTaskWidget> {
                 });
           });
         } else {
+          var curTaskId = "";
           await FirebaseFirestore.instance
               .collection('users')
               .doc(LoginSignupUtilities().curUser!.uid)
@@ -97,6 +117,7 @@ class _GetTimeNTaskWidgetState extends State<GetTimeNTaskWidget> {
               b.toString().substring(10, 15)
             ]
           }).then((value) {
+            curTaskId = value.id;
             widget.times.add([a, b]);
             Navigator.of(context).pushReplacementNamed(
                 ExistingCreationHeadScreen.existingCreationHeadScreenRoute,
@@ -106,6 +127,13 @@ class _GetTimeNTaskWidgetState extends State<GetTimeNTaskWidget> {
                   'times': widget.times,
                   'docId': value.id,
                 });
+          }).then((value) async {
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(LoginSignupUtilities().curUser!.uid)
+                .collection('timetables')
+                .doc(widget.ttid)
+                .set({'taskId': curTaskId, 'name': widget.ttName});
           });
         }
       } else {

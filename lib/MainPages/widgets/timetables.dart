@@ -32,9 +32,10 @@ class _TimetablesScreenState extends State<TimetablesScreen> {
         .collection('users')
         .doc(user!.uid)
         .collection('timetables')
-        .doc(id);
-    FirebaseFirestore.instance
-        .runTransaction((transaction) async => transaction.delete(docRef));
+        .doc(id)
+        .delete();
+    // FirebaseFirestore.instance
+    //     .runTransaction((transaction) async => transaction.delete(docRef));
   }
 
   @override
@@ -80,25 +81,32 @@ class _TimetablesScreenState extends State<TimetablesScreen> {
                   )),
                 );
               }
+
               return SizedBox(
                 height: 220,
                 width: 380,
                 child: ListView.builder(
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
+                      var ttName = snapshot.data!.docs[index].get('name');
                       return Column(
                         children: [
                           LoginSignupUtilities().styleButton(ElevatedButton(
                             onPressed: () {
                               Navigator.of(context).pushNamed(
                                   TimetableView.timetableViewRoute,
-                                  arguments: snapshot.data!.docs[index].id);
+                                  arguments: {
+                                    'taskId': snapshot.data!.docs[index]
+                                        .get('taskId'),
+                                    'id': snapshot.data!.docs[index].id,
+                                    'name': ttName
+                                  });
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  snapshot.data!.docs[index].get('name'),
+                                  ttName,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!

@@ -3,9 +3,12 @@ import 'dart:ffi';
 
 import 'package:MyTime/TimetableView/Widgets/eachtask_display.dart';
 import 'package:MyTime/utilities/basic_utilities.dart';
+import 'package:MyTime/utilities/get_timetable_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../ExistingTimetableCreation/Screens/existing_creation_head_screen.dart';
 
 class TimetableView extends StatefulWidget {
   static const String timetableViewRoute = '/time-table-view';
@@ -16,15 +19,47 @@ class TimetableView extends StatefulWidget {
 }
 
 class _TimetableViewState extends State<TimetableView> {
+  var times = [];
   @override
   Widget build(BuildContext context) {
-    var curTTID = ModalRoute.of(context)!.settings.arguments as String;
+    final Map<String, dynamic> argumentVals =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    getTTtimes() {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(BasicUtilities().curUser()!.uid)
+          .collection('timetables')
+          .doc(argumentVals['id'])
+          .collection('tasks')
+          .get()
+          .then((value) {
+        value.docs.first.data().forEach((key, value) {
+          times.add([
+            BasicUtilities().stringToTime(value[0]),
+            BasicUtilities().stringToTime(value[1])
+          ]);
+        });
+      });
+    }
+
+    addTask() {
+      getTTtimes();
+      Navigator.of(context).pushNamed(
+          ExistingCreationHeadScreen.existingCreationHeadScreenRoute,
+          arguments: {
+            'name': argumentVals['name'],
+            'id': argumentVals['id'],
+            'times': times,
+            'docId': argumentVals['taskId'],
+          });
+    }
+
     getTimetable() {
       return FirebaseFirestore.instance
           .collection('users')
           .doc(BasicUtilities().curUser()!.uid)
           .collection('timetables')
-          .doc(curTTID)
+          .doc(argumentVals['id'])
           .collection('tasks')
           .get();
     }
@@ -61,7 +96,7 @@ class _TimetableViewState extends State<TimetableView> {
             floatingActionButton: FloatingActionButton.small(
               backgroundColor: Colors.black,
               child: const Icon(Icons.add),
-              onPressed: () {},
+              onPressed: addTask,
             ),
             backgroundColor: const Color.fromRGBO(9, 13, 51, 1),
             body: SafeArea(
@@ -73,7 +108,7 @@ class _TimetableViewState extends State<TimetableView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("My Timetable",
+                        Text(argumentVals['name'],
                             style: GoogleFonts.rubik(color: Colors.white)),
                         Text("Set as Current Timetable",
                             style: GoogleFonts.rubik(color: Colors.white)),

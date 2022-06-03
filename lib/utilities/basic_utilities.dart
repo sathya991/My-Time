@@ -7,4 +7,10 @@ class BasicUtilities {
   int toMinutes(TimeOfDay myTime) {
     return ((myTime.hour * 60) + myTime.minute);
   }
+
+  TimeOfDay stringToTime(String time) {
+    return TimeOfDay(
+        hour: int.parse(time.toString().substring(0, 2)),
+        minute: int.parse(time.toString().substring(3)));
+  }
 }
