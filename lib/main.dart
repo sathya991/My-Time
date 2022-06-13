@@ -58,7 +58,16 @@ class MyApp extends StatelessWidget {
         ExistingCreationHeadScreen.existingCreationHeadScreenRoute: (context) =>
             const ExistingCreationHeadScreen(),
         GetTimetableName.getTTnameRoute: (context) => const GetTimetableName(),
-        TimetableView.timetableViewRoute: (context) => const TimetableView(),
+        // TimetableView.timetableViewRoute: (context) => const TimetableView(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == TimetableView.timetableViewRoute) {
+          final value = settings.arguments as Map<String, dynamic>;
+          return MaterialPageRoute(
+              builder: (_) => TimetableView(
+                    argumentVals: value,
+                  ));
+        }
       },
     );
   }

@@ -18,18 +18,10 @@ class HeadScreen extends StatefulWidget {
 class _HeadScreenState extends State<HeadScreen> {
   String checkRegister = "";
   Color selectColor = const Color.fromRGBO(0, 78, 146, 1);
-  // @override
-  // void initState() {
-  //   checkRegister = ModalRoute.of(context)!.settings.arguments as String;
-
-  //   super.initState();
-
-  // }
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    super.initState();
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut().then((value) {
+      Navigator.of(context).pushReplacementNamed('/');
+    });
   }
 
   var _curIndex = 0;
@@ -38,6 +30,13 @@ class _HeadScreenState extends State<HeadScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: _curIndex == 0
+            ? FloatingActionButton(
+                backgroundColor: const Color.fromRGBO(0, 78, 146, 1),
+                onPressed: _signOut,
+                child: const FaIcon(FontAwesomeIcons.arrowRightFromBracket),
+              )
+            : null,
         bottomNavigationBar: Container(
           decoration: const BoxDecoration(
               border: Border(top: BorderSide(color: Colors.black, width: 0.2))),

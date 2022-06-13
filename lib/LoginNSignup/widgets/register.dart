@@ -32,7 +32,8 @@ class RegisterWidget extends StatelessWidget {
             'email': _email,
             'phone': _phone,
             'username': _username,
-            'profPic': ""
+            'profPic': "",
+            'curTT': "",
           }).then((value) {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 HeadScreen.headScreenRoute, ModalRoute.withName('/'),
