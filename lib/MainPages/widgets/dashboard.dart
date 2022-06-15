@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:MyTime/MainPages/widgets/text_button_column.dart';
 import 'package:MyTime/TimetableView/Screens/timetable_view.dart';
 import 'package:MyTime/utilities/basic_utilities.dart';
@@ -19,15 +21,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String curTT = "No Preferred Timetable yet";
   var ttId = "";
   var ttTaskId = "";
+  String curTask = "You have no task right now!";
   getCurTT() {
     FirebaseFirestore.instance
         .collection('users')
         .doc(BasicUtilities().curUser()!.uid)
         .get()
         .then((value) {
-      setState(() {
-        ttId = value.get('curTT');
-      });
+      if (mounted) {
+        setState(() {
+          ttId = value.get('curTT');
+        });
+      }
     }).then((value) {
       FirebaseFirestore.instance
           .collection('users')
@@ -36,10 +41,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
           .doc(ttId)
           .get()
           .then((value) {
-        setState(() {
-          curTT = value.get('name');
-          ttTaskId = value.get('taskId');
-        });
+        if (mounted) {
+          setState(() {
+            curTT = value.get('name');
+            ttTaskId = value.get('taskId');
+            showTask();
+          });
+        }
       });
     });
   }
@@ -49,12 +57,50 @@ class _DashboardScreenState extends State<DashboardScreen> {
         arguments: {'taskId': ttTaskId, 'id': ttId, 'name': curTT});
   }
 
-  showTask() {}
+  showTask() {
+    if (ttId != "") {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(BasicUtilities().curUser()!.uid)
+          .collection('timetables')
+          .doc(ttId)
+          .collection('tasks')
+          .doc(ttTaskId)
+          .get()
+          .then((value) {
+        value.data()!.forEach((key, value) {
+          var v1 = BasicUtilities().stringToTime(value[0]);
+          var v2 = BasicUtilities().stringToTime(value[1]);
+          var curTime = TimeOfDay.now();
+          if (BasicUtilities().toMinutes(curTime) >=
+                  BasicUtilities().toMinutes(v1) &&
+              BasicUtilities().toMinutes(curTime) <=
+                  BasicUtilities().toMinutes(v2)) {
+            if (mounted) {
+              setState(() {
+                curTask = key.toString();
+              });
+            }
+          }
+        });
+      });
+    }
+  }
+
+  Timer? timer;
   showStreak() {}
   @override
   void initState() {
     getCurTT();
+    timer =
+        Timer.periodic(const Duration(seconds: 30), (Timer t) => getCurTT());
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -74,7 +120,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           TextButtonColumnWidget(
             topText: "Current Task",
-            buttonText: "Current task",
+            buttonText: curTask,
             icon: FontAwesomeIcons.arrowUpRightFromSquare,
             func: showTask,
           ),
